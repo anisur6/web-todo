@@ -18,11 +18,11 @@ function App() {
 
   // function for adding list
   const addTask = () => {
-    if(newTask){
-      let num = todo.length + 1;
-      let newEntry = {id : num, title: newTask, status: false}
-      setTodo([...todo, newEntry])
-      setNewTask('');
+  if(newTask){
+    const num = todo.length + 1;
+    const newEntry = {id : num, title: newTask, status: false}
+    setTodo([...todo, newEntry])
+    setNewTask('');
     }
   }
 
@@ -36,13 +36,13 @@ function App() {
 
   //function for mark as read
   const markDone = (id) => {
-    const allTaks = todo.map(task => {
-      if(task.id === id){
-        return ({...task, status : !task.status})
-      }
-      return task;
-    })
-    setTodo(allTaks);
+   const alltask = todo.map(task => {
+    if(task.id === id){
+      return({...task, status : !task.status})
+    }
+    return task
+   })
+   setTodo(alltask)
   }
 
 
@@ -53,12 +53,15 @@ function App() {
       title : e.target.value,
       status: updateTask.status ? true : false
     }
-    setUpdateTask(newEntry)
+    setUpdateTask(newEntry);
   }
 
   //function for updateing list item
   const updateData = () => {
-    
+    let filterRecords = [...todo].filter( task=>task.id !== updateTask.id);
+    let updatedObject = [...filterRecords, updateTask];
+    setTodo(updatedObject);
+    setUpdateTask('');
   }
 
   //function for canceling update
@@ -67,28 +70,9 @@ function App() {
   }
 
 
-
-
-
-
-
-  // function for deleting list 
-  // const deleteall = () => {
-  //   setTodo([]);
-  // }
-
-
-
-
-
-
-
-
   return (
     <>
     <div className='container App'>
-
-    
     <div className='row text-center'>
     <h1 className='fw-bold'>To Do List</h1>
     </div>
@@ -97,15 +81,14 @@ function App() {
         <div className="col">
           <input 
            value={updateTask && updateTask.title}
-           title={(e) => setUpdateTask(e)}
+           onChange={(e) => changeTask(e)}
             className="form-control form-control-lg"
           />
         </div>
         <div className="col-auto">
           <button
-            value={updateTask}
-            onClick={updateData}
-            className="btn btn-lg btn-success mr-20"
+          onClick={updateData}
+          className="btn btn-lg btn-success mr-20"
           >Update</button>
           <button
             onClick={cancelUpdate}
@@ -159,13 +142,16 @@ function App() {
               <FontAwesomeIcon icon={faCircleCheck} />
               </span>
 
-              <span onClick={(e) => setUpdateTask({
-                id: task.id,
-                title: task.title,
-                status: task.status ? true : false
-              }) }>
-              <FontAwesomeIcon icon={faPenToSquare} />
-              </span>
+            {task.status ? null : (
+            <span onClick={(e) => setUpdateTask({
+              id: task.id,
+              title: task.title,
+              status: task.status ? true : false
+            }) }>
+            <FontAwesomeIcon icon={faPenToSquare} />
+            </span>
+            )}
+              
               
               <span onClick={() => deleteTask(task.id)}>
               <FontAwesomeIcon icon={faTrashCan} />
