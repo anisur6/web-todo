@@ -74,52 +74,64 @@ function App() {
     <>
     <div className='container App'>
     <div className='row text-center'>
-    <h1 className='fw-bold'>To Do List</h1>
+    <h1 className='fw-bold text-light text-uppercase'>To Do List</h1>
     </div>
-     {/* Update Task */}
+
+
+    {updateTask && updateTask ? (
+      <>
+    
      <div className="row">
-        <div className="col">
-          <input 
-           value={updateTask && updateTask.title}
-           onChange={(e) => changeTask(e)}
-            className="form-control form-control-lg"
-          />
-        </div>
-        <div className="col-auto">
-          <button
-          onClick={updateData}
-          className="btn btn-lg btn-success mr-20"
-          >Update</button>
-          <button
-            onClick={cancelUpdate}
-            className="btn btn-lg btn-warning"
-          >Cancel</button>
-          {/* <button
-        onClick={deleteall}
-            className="btn btn-lg btn-danger"
-          >delete all</button> */}
-        </div>
-      </div>
-      <br />  
+     <div className="col">
+       <input 
+        value={updateTask && updateTask.title}
+        onChange={(e) => changeTask(e)}
+         className="form-control form-control-lg"
+       />
+     </div>
+     <div className="col-auto">
+       <button
+       onClick={updateData}
+       className="btn btn-lg btn-success mr-20"
+       >Update</button>
+       <button
+         onClick={cancelUpdate}
+         className="btn btn-lg btn-warning"
+       >Cancel</button>
+       {/* <button
+     onClick={deleteall}
+         className="btn btn-lg btn-danger"
+       >delete all</button> */}
+     </div>
+   </div>
+   <br />
+   </>  
+    ) : (
+      <>
+       {/* Add Task */}
+       <div className="row">
+       <div className="col">
+         <input 
+         value={newTask}
+         onChange={(e) => setNewTask(e.target.value)}   
+         className="form-control form-control-lg"
+         />
+       </div>
+       <div className="col-auto">
+         <button
+        onClick={addTask}
+        
+           className="btn btn-lg btn-success"
+         >Add Task</button>
+       </div>
+     </div>
+     <br />
+      </>
+    )}
+     
 
 
-        {/* Add Task */}
-        <div className="row">
-        <div className="col">
-          <input 
-          value={newTask}
-          onChange={(e) => setNewTask(e.target.value)}   
-          className="form-control form-control-lg"
-          />
-        </div>
-        <div className="col-auto">
-          <button
-         onClick={addTask}
-            className="btn btn-lg btn-success"
-          >Add Task</button>
-        </div>
-      </div>
-      <br />
+       
 
       {todo && todo.length ? '' : <p className='text-light'>No Tasks...</p> }
 
